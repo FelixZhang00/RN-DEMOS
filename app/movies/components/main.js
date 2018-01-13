@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ListView
+    ListView, TextInput
 } from 'react-native'
 
 export default class Main extends Component<{}> {
@@ -17,16 +17,26 @@ export default class Main extends Component<{}> {
         }
     }
 
-    renderRow(){
-
+    renderRow(row){
+        return(
+            <View style={styles.listItem}>
+                <Text>{row}</Text>
+            </View>
+        )
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-                </Text>
+                <TextInput
+                    style={{height:40,borderColor:'gray',borderWidth:1}}
+                    onChangeText={(text) => this.setState({text})}
+                    placeholder="Enter search keyword"
+                />
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                />
             </View>
         );
     }
@@ -36,12 +46,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        backgroundColor: '#F5FCFF',
+        marginTop:25
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    listItem:{
+        margin:10
     }
 });
