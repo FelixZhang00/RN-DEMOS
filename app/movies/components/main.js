@@ -10,7 +10,8 @@ import {debounce} from 'lodash'
 
 //import { OMDB_API_KEY} from '../../../api';
 //https://stackoverflow.com/questions/33117227/setting-environment-variable-in-react-native
-import { OMDB_API_KEY} from 'react-native-dotenv'
+import {OMDB_API_KEY} from 'react-native-dotenv'
+import ListItem from "./ListItem";
 
 export default class Main extends Component<{}> {
 
@@ -29,7 +30,7 @@ export default class Main extends Component<{}> {
         fetch(`http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&plot=full&s=` + text)
             .then((response) => response.json())
             .then((responseData) => {
-                if('Search' in responseData){
+                if ('Search' in responseData) {
                     console.log(responseData);
                     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
                     this.setState({
@@ -43,16 +44,9 @@ export default class Main extends Component<{}> {
             })
     }, 500);
 
-    renderRow(row) {
+    renderRow(row, sId, rId) {
         return (
-            <View style={styles.listItem}>
-                <Image source={{uri: row.Poster}} style={styles.poster}/>
-                <View style={{flex: 1}}>
-                    <Text style={styles.title}>{row.Title}</Text>
-                    <Text style={styles.subHeading}>{row.Type}-{row.Year}</Text>
-                </View>
-
-            </View>
+            <ListItem row={row} delay={rId*50}/>
         )
     }
 
